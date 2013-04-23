@@ -9,38 +9,72 @@
 	    android:layout_width="match_parent"
 		android:layout_height="match_parent"
 	    tools:context=".MainActivity" >
+
 	    <TextView
 	        android:id="@+id/textView1"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/textView2"
-	        android:layout_weight="0.7"
-	        android:background="#EC7703"
+	        android:layout_weight="0.67"
+	        android:background="#FFFFFF"
 	        android:gravity="center"
-	        android:text="Kunal+Amit"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 	    <TextView
 	        android:id="@+id/textView3"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="0.3"
+	        android:layout_weight="0.33"
+	        android:background="#CFCFCF"
 	        android:text=""
-	        android:background="#C0C0C0"
 	        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 	</LinearLayout>
+
 	<RelativeLayout
 	    android:layout_width="match_parent"
-		android:layout_height="match_parent">
+	    android:layout_height="match_parent" >
 
-		<Button
-		    android:id="@+id/button1"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:layout_alignParentTop="true"
-		    android:layout_marginRight="56dp"
-		    android:layout_marginTop="190dp"
-		    android:text="Hit Me" />
-	    
+	    <TextView
+	        android:id="@+id/textViewStimuli"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        android:text="+"
+	        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+	    <Button
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_above="@+id/textViewStimuli"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginBottom="55dp"
+	        android:layout_marginRight="38dp"
+	        android:minHeight="64dip"
+	        android:text="1" />
+
+	    <Button
+	        android:id="@+id/button3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/button1"
+	        android:layout_below="@+id/button2"
+	        android:layout_marginTop="27dp"
+	        android:minHeight="64dip"
+	        android:text="3" />
+
+	    <Button
+	        android:id="@+id/button2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignRight="@+id/button3"
+	        android:layout_centerVertical="true"
+	        android:layout_marginRight="46dp"
+	        android:minHeight="64dip"
+	        android:text="2" />
+
 	</RelativeLayout>
+
 </FrameLayout>

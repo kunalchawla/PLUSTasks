@@ -13,7 +13,14 @@ public class MainActivity extends Activity {
 	
 
 	Button button;
-	String[] ThreeDigNumsTest = new String[]{"100", "003", "020", "003", "020", "131", "331"};
+	String[] PracticeOne = new String[]{"100", "003", "020", "003", "020", "131", "331"};
+	String[] PracticeTwo = new String[]{"100", "003", "020", "003", "020", "131", "331"};
+	String[] ThreeDigitNumTest = new String[]{"100", "003", "020", "003", "020", "131", "331"};
+	int trialArrayIndex = 0;
+	int trial = 1;
+	String buttonPressed;
+	boolean isButtonPressed = false;
+	
 	int count = 0;
 	boolean trialRunning = false;
 	long startTime = 0;
@@ -25,7 +32,26 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addListenerOnButton();        
+        addListenerOnButton(); 
+    }
+    
+    @Override
+    protected void onStart(){ 
+        super.onStart();
+        //Practice 1
+        while(trialArrayIndex<PracticeOne.length){
+        	//Show Plus
+        	//displayPlus();
+        	
+        	//Show Trial
+        	
+        	//Increment Counters
+        	trial++;
+        	trialArrayIndex++;
+        }
+        trialArrayIndex = 0;
+        
+        //Move to Practice 2
     }
 
 
@@ -42,21 +68,16 @@ public class MainActivity extends Activity {
  		button.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				//System.out.println("Wohoo!");
 				Log.i("info", "Just hit, hit me");
-			   	TextView stimuliText = (TextView) findViewById(R.id.textView1);
+			   	TextView stimuliText = (TextView) findViewById(R.id.textViewStimuli);
 			   
 			   	
 			   	if (!trialRunning) {
 			   		 startTime = System.currentTimeMillis();
-			   		Log.i("Original", String.valueOf(startTime));
 			   		 trialRunning = true;
 			   	} else {
 			   		currentTime = System.currentTimeMillis();
 			   		estimatedTime = currentTime - startTime;
-			   		
-			   		Log.i("One", String.valueOf(startTime));
-			   		Log.i("two", String.valueOf(currentTime));
 			   		Log.i("info", String.valueOf(estimatedTime));
 			   		trialRunning = false;
 			   	}
@@ -64,7 +85,7 @@ public class MainActivity extends Activity {
 				
 				if(count % 2 == 0){
 					Log.i("info", "Even");
-					stimuliText.setText(ThreeDigNumsTest[count]);
+					stimuliText.setText(ThreeDigitNumTest[count]);
 				}else{
 					//Show +
 					Log.i("info", "odd");
@@ -75,6 +96,10 @@ public class MainActivity extends Activity {
  
 		});
  
-	}    
-    
+	}
+   
+    void displayPlus(){
+    	
+    	
+    }
 }
