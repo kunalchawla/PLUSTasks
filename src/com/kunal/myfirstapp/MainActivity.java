@@ -1,5 +1,7 @@
 package com.kunal.myfirstapp;
 
+import java.util.concurrent.TimeUnit;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -89,6 +91,15 @@ public class MainActivity extends Activity {
 	}
     
     void showStimuli(final TextView stimuliText, final Button button){
+    	//Calculate time duration for each trial
+    	if(trial == 1){
+    		startTime = System.nanoTime();
+    	}else{
+    		currentTime = System.nanoTime();
+    		elapsedTime = currentTime - startTime;
+    		startTime = currentTime;
+    	}
+    	Log.i(String.valueOf(trial), String.valueOf(TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS)));
 		if(practiceOneArrayIndex<PracticeOne.length){
 			disableButtons();
 			stimuliText.setText("+");
@@ -134,6 +145,28 @@ public class MainActivity extends Activity {
 					enableButtons();
 					stimuliText.setText(PracticeFour[practiceFourArrayIndex]);    	    		
 					practiceFourArrayIndex++;
+    	    		trial++;
+				}
+			}, 250);
+		} else if(testOneArrayIndex<TestOne.length){
+			disableButtons();
+			stimuliText.setText("+");
+			button.postDelayed(new Runnable(){
+				@Override
+				public void run(){
+					final int myTrial = trial;
+					enableButtons();
+					stimuliText.setText(TestOne[testOneArrayIndex]);
+					Runnable r = new Runnable() {
+						@Override
+						public void run(){
+							if (myTrial == trial - 1) {
+								showStimuli(stimuliText, button);
+							}
+						}
+					};
+					button.postDelayed(r, 2500);
+					testOneArrayIndex++;
     	    		trial++;
 				}
 			}, 250);
