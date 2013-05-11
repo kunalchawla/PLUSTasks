@@ -1,5 +1,9 @@
 package com.kunal.myfirstapp;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
@@ -9,7 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.util.Log;
+import au.com.bytecode.opencsv.*;
 
 public class MainActivity extends Activity {
 	Button button1;
@@ -29,6 +35,7 @@ public class MainActivity extends Activity {
 	int trial = 1;
 	String buttonPressed;
 	boolean isButtonPressed = false;
+	CSVWriter writer;
 	
 	
 	int count = 0;
@@ -41,8 +48,24 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         addListenerOnButton(); 
+           
+//        try {
+//			InputStream io = getAssets().open("yourFile.csv");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			try {
+//				writer = new CSVWriter(new FileWriter("yourFile.csv"));
+//			} catch (IOException iOException) {
+//				// TODO Auto-generated catch block
+//				iOException.printStackTrace();
+//			}
+//	        
+//		}
+       
+        
     }
     
     @Override
@@ -59,7 +82,8 @@ public class MainActivity extends Activity {
     }
     
     public void addListenerOnButton() {
-    	
+		
+		
     	button1 = (Button) findViewById(R.id.button1);
     	button2 = (Button) findViewById(R.id.button2);
     	button3 = (Button) findViewById(R.id.button3);
