@@ -1,13 +1,19 @@
 package com.kunal.myfirstapp;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.app.Activity;
+import android.content.Context;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +21,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.util.Log;
-import au.com.bytecode.opencsv.*;
 
 public class MainActivity extends Activity {
 	Button button1;
@@ -35,9 +40,7 @@ public class MainActivity extends Activity {
 	int trial = 1;
 	String buttonPressed;
 	boolean isButtonPressed = false;
-	CSVWriter writer;
-	
-	
+
 	int count = 0;
 	boolean trialRunning = false;
 	long startTime = 0;
@@ -49,23 +52,30 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_main);
-        addListenerOnButton(); 
-           
-//        try {
-//			InputStream io = getAssets().open("yourFile.csv");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			try {
-//				writer = new CSVWriter(new FileWriter("yourFile.csv"));
-//			} catch (IOException iOException) {
-//				// TODO Auto-generated catch block
-//				iOException.printStackTrace();
-//			}
-//	        
-//		}
-       
+        setContentView(R.layout.activity_main);        
+
+        try {
+            FileOutputStream fos = openFileOutput("firstFile.csv",
+                    Context.MODE_APPEND | Context.MODE_APPEND);
+            String str = "kunal, amit, ldt, stanford";
+            fos.write(str.getBytes("UTF-16"));
+            fos.close();
+         
+            String storageState = Environment.getExternalStorageState();
+            if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+                File file = new File(getExternalFilesDir(null),
+                        "firstFile.csv");
+                FileOutputStream fos2 = new FileOutputStream(file);
+                fos2.write(str.getBytes("UTF-16"));
+                fos2.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
+
+        
+        addListenerOnButton();
     }
     
     @Override
@@ -92,6 +102,7 @@ public class MainActivity extends Activity {
     		TextView stimuliText = (TextView) findViewById(R.id.textViewStimuli);    
     		@Override
     		public void onClick(View arg0) {
+    			
     			showStimuli(stimuliText, button1);
     		}
     	});
