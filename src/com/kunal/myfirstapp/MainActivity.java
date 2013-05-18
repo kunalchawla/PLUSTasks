@@ -17,13 +17,18 @@ import java.util.concurrent.TimeUnit;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 
 public class MainActivity extends Activity {
@@ -61,7 +66,51 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);        
 
-        try {
+        userIdAlert();
+        addListenerOnButton();
+    }
+    
+    @Override
+    protected void onStart(){ 
+        super.onStart();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+    @Override
+    public void onBackPressed() {
+    } 
+    
+    public void userIdAlert() {
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    	alert.setTitle("Enter User ID:");
+
+    	// Set an EditText view to get user input 
+    	final EditText input = new EditText(this);
+    	input.setInputType(InputType.TYPE_CLASS_NUMBER);
+    	InputFilter[] FilterArray = new InputFilter[1];
+    	FilterArray[0] = new InputFilter.LengthFilter(4);
+    	input.setFilters(FilterArray);
+    	alert.setView(input);
+
+    	alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    	public void onClick(DialogInterface dialog, int whichButton) {
+    	  String value = input.getText().toString();
+    	  userId = value;
+    	  createCSV();
+    	  }
+    	});
+    	alert.show();
+    }
+    
+    public void createCSV(){
+    	try {
         	Date date = Calendar.getInstance().getTime();
         	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         	String fileNameDate = sdf.format(date);
@@ -88,28 +137,9 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-
-        
-        addListenerOnButton();
-    }
-    
-    @Override
-    protected void onStart(){ 
-        super.onStart();
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
     
     public void addListenerOnButton() {
-		
-		
     	button1 = (Button) findViewById(R.id.button1);
     	button2 = (Button) findViewById(R.id.button2);
     	button3 = (Button) findViewById(R.id.button3);
