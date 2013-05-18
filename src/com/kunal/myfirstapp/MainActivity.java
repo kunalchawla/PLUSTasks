@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
@@ -40,6 +44,9 @@ public class MainActivity extends Activity {
 	int trial = 1;
 	String buttonPressed;
 	boolean isButtonPressed = false;
+	String taskName = "MSIT";
+	//To be changed to user input
+	String userId = "1234";
 
 	int count = 0;
 	boolean trialRunning = false;
@@ -55,17 +62,26 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);        
 
         try {
-            FileOutputStream fos = openFileOutput("firstFile.csv",
+        	Date date = Calendar.getInstance().getTime();
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        	String fileNameDate = sdf.format(date);
+        	
+        	String fileName = taskName + "_" + userId  + "_" + fileNameDate + ".csv";
+            FileOutputStream fos = openFileOutput(fileName,
                     Context.MODE_APPEND | Context.MODE_APPEND);
-            String str = "kunal, amit, ldt, stanford";
+            String str = "ID, Date, Time, RA,";
             fos.write(str.getBytes("UTF-16"));
             fos.close();
-         
+            
             String storageState = Environment.getExternalStorageState();
             if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-                File file = new File(getExternalFilesDir(null),
-                        "firstFile.csv");
+              
+            	File file = new File(getExternalFilesDir(null),
+            			fileName);
                 FileOutputStream fos2 = new FileOutputStream(file);
+                fos2.write(str.getBytes("UTF-16"));
+                String newLine = "\r\n"; 
+                fos2.write(newLine.getBytes("UTF-16"));
                 fos2.write(str.getBytes("UTF-16"));
                 fos2.close();
             }
